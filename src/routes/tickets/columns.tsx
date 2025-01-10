@@ -2,17 +2,13 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button.tsx";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
+import { TicketDto } from "@/dtos/ticket/Ticket";
+import { Badge } from "@/components/ui/badge";
+import { ChooseOption, ColorChooseOption } from "@/dtos/common/ChooseOption";
 
-export type Tickets = {
-    title: string;
-    status: string;
-    assigned_to: string;
-    created_by: string;
-};
-
-export const columns: ColumnDef<Tickets>[] = [
+export const columns: ColumnDef<TicketDto>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -50,12 +46,25 @@ export const columns: ColumnDef<Tickets>[] = [
                 <Button
                     variant="ghost"
                     size={"sm"}
+                    className="group"
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
                 >
                     Title
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    {column.getIsSorted() === "asc" ? (
+                        <ArrowUp
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    ) : column.getIsSorted() === "desc" ? (
+                        <ArrowDown
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    ) : (
+                        <ArrowUpDown
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    )}
                 </Button>
             );
         },
@@ -67,15 +76,37 @@ export const columns: ColumnDef<Tickets>[] = [
                 <Button
                     variant="ghost"
                     size={"sm"}
+                    className="group"
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
                 >
                     Status
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    {column.getIsSorted() === "asc" ? (
+                        <ArrowUp
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    ) : column.getIsSorted() === "desc" ? (
+                        <ArrowDown
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    ) : (
+                        <ArrowUpDown
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    )}
                 </Button>
             );
         },
+        cell: ({ cell }) => (
+            <Badge
+                variant={cell.getValue<ColorChooseOption>().color}
+                className={"border-border "}
+                aria-label="Select row"
+            >
+                {cell.getValue<ColorChooseOption>().name}
+            </Badge>
+        ),
     },
     {
         accessorKey: "assigned_to",
@@ -84,15 +115,31 @@ export const columns: ColumnDef<Tickets>[] = [
                 <Button
                     variant="ghost"
                     size={"sm"}
+                    className="group"
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
                 >
                     Assigned to
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    {column.getIsSorted() === "asc" ? (
+                        <ArrowUp
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    ) : column.getIsSorted() === "desc" ? (
+                        <ArrowDown
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    ) : (
+                        <ArrowUpDown
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    )}
                 </Button>
             );
         },
+        cell: ({ row }) => (
+            <div>{(row.getValue("assigned_to") as ChooseOption).name}</div>
+        ),
     },
     {
         accessorKey: "created_by",
@@ -101,15 +148,30 @@ export const columns: ColumnDef<Tickets>[] = [
                 <Button
                     variant="ghost"
                     size={"sm"}
+                    className="group"
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
                 >
                     Created by
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    {column.getIsSorted() === "asc" ? (
+                        <ArrowUp
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    ) : column.getIsSorted() === "desc" ? (
+                        <ArrowDown
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    ) : (
+                        <ArrowUpDown
+                            className={"group-hover:text-primary ml-1 h-4 w-4"}
+                        />
+                    )}
                 </Button>
             );
         },
+        cell: ({ row }) => (
+            <div>{(row.getValue("created_by") as ChooseOption).name}</div>
+        ),
     },
 ];
-
